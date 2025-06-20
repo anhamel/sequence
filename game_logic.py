@@ -7,6 +7,8 @@ import pygame
 # Initialize pygame
 pygame.init()
 
+
+
 # Set up display
 ORIGINAL_WIDTH = 1200
 WIDTH = int(ORIGINAL_WIDTH * 1.5)  # expand by 50% for info panel
@@ -67,11 +69,21 @@ class CardDeck:
 class Card:
     def __init__(self, name, image_path, grid_pos, cell_width, cell_height):
         self.name = name
-        #self.original_image = pygame.image.load(image_path).convert_alpha()
         adjusted_width = cell_width - 2 * BUFFER
         adjusted_height = cell_height - 2 * BUFFER
-        #self.image = self.scale_image_to_cell(self.original_image, adjusted_width, adjusted_height)
         self.grid_pos = grid_pos
+
+        try:
+            self.original_image = pygame.image.load(image_path).convert_alpha()
+
+            self.image = self.scale_image_to_cell(self.original_image, adjusted_width, adjusted_height)
+            self.rect = self.get_rect_from_grid(cell_width, cell_height)
+        except:
+            self.original_image = False
+            self.image = False
+            self.rect = False
+
+
 
         if name == "board_corner":
             self.suit = False
@@ -82,7 +94,7 @@ class Card:
             self.card_value = name[:-1]
             self.is_face = self.card_value in ['J', 'Q', 'K']
 
-        self.rect = self.get_rect_from_grid(CELL_WIDTH, CELL_HEIGHT)
+
         self.placed_token = False
 
     def scale_image_to_cell(self, image, max_width, max_height):
@@ -93,9 +105,9 @@ class Card:
 
     def get_rect_from_grid(self, cell_width, cell_height):
         row, col = self.grid_pos
-        x = cell_width
-        y = cell_height
-        return
+        x = col * cell_width + (cell_width - self.image.get_width()) // 2
+        y = row * cell_height + (cell_height - self.image.get_height()) // 2
+        return self.image.get_rect(topleft=(x, y))
 
 class CardGrid:
     def __init__(self, rows, cols, top_left, cell_width, cell_height):

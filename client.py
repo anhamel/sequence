@@ -147,14 +147,15 @@ def main():
                                                 selected_token_card = None
                                                 card_played_this_turn = True
                 else:
-                    while player_id != current_player_id:
+                    a = 1
+                    """while player_id != current_player_id:
                         game = listen_for_updates(s,'game_state')
                         time.sleep(1)
                         print(player_id, current_player_id)
                         #s.listen()
                         #waiting = True
                         #while waiting:
-                        #    try:
+                        #    try:"""
 
             draw_window(game, player_id, selected_index, selected_card_name, selected_token_card)
 

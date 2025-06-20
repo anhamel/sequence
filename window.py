@@ -3,7 +3,7 @@ from game_logic import *
 
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Sequence Game Prototype")
-def draw_window(game, selected_index, selected_card_name, selected_token_card):
+def draw_window(game, player_id, selected_index, selected_card_name, selected_token_card):
     WINDOW.fill(GREEN_FELT)
     grid.draw(WINDOW)
 
@@ -18,7 +18,9 @@ def draw_window(game, selected_index, selected_card_name, selected_token_card):
     #WINDOW.blit(turn_text, (info_x, info_y))
 
     INFO_RECT = pygame.Rect(ORIGINAL_WIDTH + 20, 40, CELL_WIDTH * 3, 60)
+    ID_RECT = pygame.Rect(ORIGINAL_WIDTH + 20, 800, CELL_WIDTH * 3, 60)
     draw_player_turn_info(WINDOW, game.current_player, INFO_RECT)
+    draw_player_ID(WINDOW, player_id, ID_RECT)
 
 
     # Clear hand grid
